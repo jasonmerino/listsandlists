@@ -1,1 +1,31 @@
 @import "compass_twitter_bootstrap";
+@import "compass_twitter_bootstrap/font-awesome";
+@import "compass_twitter_bootstrap/responsive";
+
+body {
+  padding: 0;
+}
+
+.header {
+  text-align: center;
+  background: #222;
+  color: #fff;
+  margin: 0;
+  padding: 10px 0;
+}
+
+.listsList li {
+  padding: 10px;
+  position: relative;
+  border-bottom: 1px solid #ccc;
+}
+
+.listsList li:first-child {
+  border-top: 1px solid #ccc;
+}
+
+.listsList li .badge {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}

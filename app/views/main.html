@@ -1,9 +1,11 @@
-<div class="hero-unit">
-  <h1>'Allo, 'Allo!</h1>
-  <p>You now have</p>
-  <ul>
-      <li ng-repeat="thing in awesomeThings">{{thing}}</li>
-  </ul>
-  <p>installed.</p>
-  <h3>Enjoy coding! - Yeoman</h3>
+<div class="row-fluid">
+  <div class="span12">
+    <div class="header">
+      <h1>Lists & Lists</h1>
+      <i class="icon-plus" ng-click="addList()"></i>
+    </div>
+    <ul class="unstyled listsList">
+      <li class="status-{{status}}" ng-click="navigateToList()" ng-repeat="list in lists">{{list.item}} <span class="badge">{{list.total}}</span></li>
+    </ul>
+  </div>
 </div>
