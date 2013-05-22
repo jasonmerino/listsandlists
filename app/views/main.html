@@ -2,7 +2,10 @@
   <div class="span12">
     <div class="header">
       <h1>Lists & Lists</h1>
-      <i class="icon-plus" ng-click="addList()"></i>
+      <i class="icon-plus" ng-click="showAddList()"></i>
+    </div>
+    <div id="add-list" class="add-list" ng-show="{{showAddListUI}}">
+      <input type="text" name="" id="list-to-add" placeholder="Enter list title...">
     </div>
     <ul class="unstyled listsList">
       <li class="status-{{status}}" ng-click="navigateToList()" ng-repeat="list in lists">{{list.item}} <span class="badge">{{list.total}}</span></li>

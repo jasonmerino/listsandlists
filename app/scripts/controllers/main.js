@@ -7,28 +7,32 @@ angular.module('listsandlistsApp')
         id: 0,
         item: 'Home Depot',
         status: null,
-        total: 13
+        total: 3
       },
       {
         id: 1,
         item: 'Food Maxx',
         status: null,
-        total: 7
+        total: 4
       },
       {
         id: 2,
         item: 'Raley\'s',
         status: null,
-        total: 10
+        total: 2
       }
     ];
+
+    $scope.showAddListUI = false;
+
     $scope.getListCount = function () {
       return $scope.lists.length;
     };
     $scope.navigateToList = function () {
       $location.path('/list/' + this.list.id);
     };
-    $scope.addList = function () {
-      alert('add list');
+    $scope.showAddList = function () {
+      $scope.showAddListUI = true;
+      //alert('add list');
     };
   }]);

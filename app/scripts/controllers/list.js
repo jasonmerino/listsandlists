@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('listsandlistsApp')
-  .controller('ListCtrl', ['$scope', '$routeParams', function ($scope, $routeParams) {
+  .controller('ListCtrl', ['$scope', '$routeParams', '$location', function ($scope, $routeParams, $location) {
     var lists = [
       {
         id: 0,
@@ -28,5 +28,9 @@ angular.module('listsandlistsApp')
       }
     }
 
-    $scope.list = getListById(~~$routeParams.id);
+    $scope.navigateToMainView = function () {
+      $location.path('/');
+    };
+
+    $scope.list = getListById(parseInt($routeParams.id, 10));
   }]);
