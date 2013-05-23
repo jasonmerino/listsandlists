@@ -1,36 +1,60 @@
 'use strict';
 
 angular.module('listsandlistsApp')
-  .controller('ListCtrl', ['$scope', '$routeParams', '$location', function ($scope, $routeParams, $location) {
-    var lists = [
-      {
-        id: 0,
-        name: 'homedepot',
-        items: ['coarse vermiculite', 'compost', 'hydrangea']
-      },
-      {
-        id: 1,
-        name: 'foodmaxx',
-        items: ['tomatoes', 'strawberries', 'cereal', 'garlic salt']
-      },
-      {
-        id: 2,
-        name: 'raleys',
-        items: ['oranges', 'coconut milk']
-      }
-    ];
+  .controller('ListCtrl',
+    ['$window', '$scope', '$routeParams', '$location',
+      function ($window, $scope, $routeParams, $location) {
 
-    function getListById(id) {
-      for (var i = 0; i < lists.length; i++) {
-        if (lists[i].id === id) {
-          return lists[i];
+        // grab data from localStorage
+        // TODO: write a better way to do this
+        if ($window.localStorage.listData !== undefined) {
+          $scope.lists = JSON.parse($window.localStorage.listData);
         }
+        else {
+          $scope.lists = [];
+        }
+
+        // store UI state within $scope
+        $scope.ui = {
+          showAddItem: false
+        };
+
+        // helper to get the current list for simpler access
+        function getListById(id) {
+          for (var i = 0; i < $scope.lists.length; i++) {
+            if ($scope.lists[i].id === id) {
+              return $scope.lists[i];
+            }
+          }
+        }
+
+        /**
+         * Add the typed item to the list and persist it in localStorage
+         */
+        $scope.addItem = function () {
+          $scope.list.itemList.push($scope.newItem);
+          // persist
+          $window.localStorage.listData = JSON.stringify($scope.lists);
+          // adjust UI
+          $scope.ui.showAddItem = false;
+          $scope.newItem = '';
+        };
+
+        /**
+         * Show the UI for adding an item
+         */
+        $scope.showAddItemUI = function () {
+          $scope.ui.showAddItem = true;
+        };
+
+        /**
+         * Navigate the user back to the main menu (back arrow button)
+         */
+        $scope.navigateToMainView = function () {
+          $location.path('/');
+        };
+
+        $scope.list = getListById(parseInt($routeParams.id, 10));
       }
-    }
-
-    $scope.navigateToMainView = function () {
-      $location.path('/');
-    };
-
-    $scope.list = getListById(parseInt($routeParams.id, 10));
-  }]);
+    ]
+  );

@@ -1,29 +1,25 @@
 'use strict';
 
 angular.module('listsandlistsApp')
-  .controller('MainCtrl', ['$scope', '$location', function ($scope, $location) {
-    $scope.lists = [
-      {
-        id: 0,
-        item: 'Home Depot',
-        status: null,
-        total: 3
-      },
-      {
-        id: 1,
-        item: 'Food Maxx',
-        status: null,
-        total: 4
-      },
-      {
-        id: 2,
-        item: 'Raley\'s',
-        status: null,
-        total: 2
-      }
-    ];
+  .controller('MainCtrl', ['$window', '$scope', '$location', function ($window, $scope, $location) {
+    $scope.lists = $window.localStorage.listData !== undefined ? JSON.parse($window.localStorage.listData) : [];
 
     $scope.showAddListUI = false;
+
+    $scope.addList = function () {
+      // store in JS
+      $scope.lists.push({
+        id: 3,
+        item: $scope.newList,
+        itemList: [],
+        status: null,
+        total: 0
+      });
+      // persist
+      $window.localStorage.listData = JSON.stringify($scope.lists);
+      $scope.newList = '';
+      $scope.showAddListUI = false;
+    };
 
     $scope.getListCount = function () {
       return $scope.lists.length;

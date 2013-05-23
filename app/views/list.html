@@ -2,10 +2,15 @@
   <div class="span12">
     <div class="header">
       <i class="icon-arrow-left" ng-click="navigateToMainView()"></i>
-      <h1>Lists & Lists</h1>
+      <h1>Lists &amp; Lists</h1>
+      <i class="icon-plus" ng-click="showAddItemUI()"></i>
+    </div>
+    <div id="add-list" class="add-list" ng-show="ui.showAddItem">
+      <input type="text" name="" ng-model="newItem" id="lnew-item" placeholder="Enter new item...">
+      <button ng-click="addItem()">Add</button>
     </div>
     <ul class="unstyled listsList">
-      <li ng-repeat="item in list.items">{{item}}</li>
+      <li ng-repeat="item in list.itemList">{{item}}</li>
     </ul>
   </div>
 </div>
