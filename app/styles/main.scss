@@ -23,16 +23,17 @@ body {
 .header .icon-plus,
 .header .icon-arrow-left {
   position: absolute;
-  top: 16px;
+  top: 6px;
   font-size: 2em;
+  padding: 10px;
 }
 
 .header .icon-plus {
-  right: 24px;
+  right: 14px;
 }
 
 .header .icon-arrow-left {
-  left: 24px;
+  left: 14px;
 }
 
 // home view stuffs

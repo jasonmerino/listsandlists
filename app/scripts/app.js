@@ -1,5 +1,9 @@
 'use strict';
 
+window.addEventListener('load', function() {
+  FastClick.attach(document.body);
+}, false);
+
 angular.module('listsandlistsApp', [])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider

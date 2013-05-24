@@ -19,6 +19,9 @@ angular.module('listsandlistsApp')
           showAddItem: false
         };
 
+        // init scope variables
+        $scope.newItem = '';
+
         // helper to get the current list for simpler access
         function getListById(id) {
           for (var i = 0; i < $scope.lists.length; i++) {
@@ -32,12 +35,14 @@ angular.module('listsandlistsApp')
          * Add the typed item to the list and persist it in localStorage
          */
         $scope.addItem = function () {
-          $scope.list.itemList.push($scope.newItem);
-          // persist
-          $window.localStorage.listData = JSON.stringify($scope.lists);
-          // adjust UI
-          $scope.ui.showAddItem = false;
-          $scope.newItem = '';
+          if ($scope.newItem !== '') {
+            $scope.list.itemList.push($scope.newItem);
+            // persist
+            $window.localStorage.listData = JSON.stringify($scope.lists);
+            // adjust UI
+            $scope.ui.showAddItem = false;
+            $scope.newItem = '';
+          }
         };
 
         /**

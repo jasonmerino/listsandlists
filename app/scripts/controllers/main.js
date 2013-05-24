@@ -5,20 +5,23 @@ angular.module('listsandlistsApp')
     $scope.lists = $window.localStorage.listData !== undefined ? JSON.parse($window.localStorage.listData) : [];
 
     $scope.showAddListUI = false;
+    $scope.newList = '';
 
     $scope.addList = function () {
-      // store in JS
-      $scope.lists.push({
-        id: 3,
-        item: $scope.newList,
-        itemList: [],
-        status: null,
-        total: 0
-      });
-      // persist
-      $window.localStorage.listData = JSON.stringify($scope.lists);
-      $scope.newList = '';
-      $scope.showAddListUI = false;
+      if ($scope.newList !== '') {
+        // store in JS
+        $scope.lists.push({
+          id: 3,
+          item: $scope.newList,
+          itemList: [],
+          status: null,
+          total: 0
+        });
+        // persist
+        $window.localStorage.listData = JSON.stringify($scope.lists);
+        $scope.newList = '';
+        $scope.showAddListUI = false;
+      }
     };
 
     $scope.getListCount = function () {
