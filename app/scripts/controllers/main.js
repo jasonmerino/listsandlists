@@ -32,6 +32,9 @@ angular.module('listsandlistsApp')
     };
     $scope.showAddList = function () {
       $scope.showAddListUI = true;
+      setTimeout(function () {
+        document.getElementById('list-to-add').focus();
+      }, 0);
       //alert('add list');
     };
   }]);

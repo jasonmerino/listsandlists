@@ -50,6 +50,9 @@ angular.module('listsandlistsApp')
          */
         $scope.showAddItemUI = function () {
           $scope.ui.showAddItem = true;
+          setTimeout(function () {
+            document.getElementById('new-item').focus();
+          }, 0);
         };
 
         /**
