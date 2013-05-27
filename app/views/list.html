@@ -1,16 +1,16 @@
 <div class="row-fluid">
-  <div class="span12">
+  <div class="span12 header-span">
     <div class="header">
       <i class="icon-arrow-left" ng-click="navigateToMainView()"></i>
       <h1>Lists &amp; Lists</h1>
       <i class="icon-plus" ng-click="showAddItemUI()"></i>
     </div>
-    <div id="add-list" class="add-list" ng-show="ui.showAddItem">
+    <div id="add-list" class="add-list input-append" ng-show="ui.showAddItem">
       <input type="text" name="" ng-model="newItem" id="new-item" placeholder="Enter new item...">
-      <button ng-click="addItem()">Add</button>
+      <button class="btn" ng-click="addItem()">Add</button>
     </div>
     <ul class="unstyled listsList">
-      <li ng-repeat="item in list.itemList">{{item}}</li>
+      <li id="item-{{listItem.id}}" ng-repeat="listItem in list.itemList" ng-click="removeItem()">{{listItem.item}}</li>
     </ul>
   </div>
 </div>

@@ -7,6 +7,10 @@ body {
 }
 
 // header stuffs
+.header-span {
+  //position: fixed;
+}
+
 .header {
   text-align: center;
   background: #222;
@@ -37,7 +41,14 @@ body {
 }
 
 // home view stuffs
+.add-list {
+  padding-top: 5px;
+  text-align: center;
+}
 
+.add-list input[type=text] {
+  width: 75%;
+}
 
 // list stuffs
 .listsList li {
