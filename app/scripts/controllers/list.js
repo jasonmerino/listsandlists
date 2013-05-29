@@ -83,13 +83,9 @@ angular.module('listsandlistsApp')
         /**
          * Remove the clicked item from the current list
          */
-        $scope.removeItem = function () {
-          for (var i = 0; i < $scope.list.itemList.length; i++) {
-            if ($scope.list.itemList[i].id === this.listItem.id) {
-              // remove the item from the listItem array
-              $scope.list.itemList.splice(i, 1);
-            }
-          }
+        $scope.removeItem = function (index) {
+          // remove the item from the listItem array
+          $scope.list.itemList.splice(index, 1);
           persist();
         };
 
