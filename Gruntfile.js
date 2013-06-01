@@ -250,13 +250,36 @@ module.exports = function (grunt) {
           cwd: '<%= yeoman.app %>',
           dest: '<%= yeoman.dist %>',
           src: [
-            '*.{ico,txt}',
+            '*.{ico,txt,png}',
             '.htaccess',
             'components/**/*',
             'images/{,*/}*.{gif,webp}',
             'styles/fonts/*'
           ]
         }]
+      }
+    },
+    manifest: {
+      generate: {
+        options: {
+          basePath: '<%= yeoman.dist %>',
+          network: ['*'],
+          preferOnline: false,
+          timestamp: true
+        },
+        src: [
+          // Put HTML, CSS and JS first (not sure if it makes a difference)
+          '**/*.html',
+          '**/*.css',
+          '**/*.js',
+          // Then include everything else...
+          '**/*.*',
+          // .. but exclude these
+          '!apple-touch-*',
+          '!favicon.ico',
+          '!app.manifest'
+        ],
+        dest: '<%= yeoman.dist %>/app.manifest'
       }
     }
   });
@@ -293,6 +316,7 @@ module.exports = function (grunt) {
     'htmlmin',
     'concat',
     'copy',
+    'manifest',
     'cdnify',
     'ngmin',
     'uglify',

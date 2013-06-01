@@ -7,7 +7,7 @@
     </div>
     <div id="add-list" class="add-list input-append" ng-show="ui.showAddItem">
       <input type="text" name="" ng-model="newItem" id="new-item" placeholder="Enter new item...">
-      <button class="btn" ng-click="addItem()">Add</button>
+      <button class="btn-add-item" ng-click="addItem()">Add</button>
     </div>
     <ul class="unstyled listsList">
       <li ng-repeat="listItem in list.itemList" ng-click="removeItem($index)">{{listItem.item}}</li>

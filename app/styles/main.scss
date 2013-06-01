@@ -4,6 +4,7 @@
 
 body {
   padding: 0;
+  color: #444;
 }
 
 // header stuffs
@@ -13,8 +14,8 @@ body {
 
 .header {
   text-align: center;
-  background: #222;
-  color: #fff;
+  background: #95C3F5;
+  color: #444;
   margin: 0;
   padding: 10px 0;
 }
@@ -42,12 +43,30 @@ body {
 
 // home view stuffs
 .add-list {
-  padding-top: 5px;
+  border-top: 1px solid #ccc;
+  height: 48px;
   text-align: center;
+  margin-bottom: -1px;
 }
 
 .add-list input[type=text] {
-  width: 75%;
+  width: 72%;
+  border: none;
+  height: 40px;
+  outline: none;
+  box-shadow: none;
+}
+
+.btn-add-list,
+.btn-add-item {
+  font-size: 16px;
+  color: #444;
+  border: none;
+  background: #ccc;
+  height: 48px;
+  padding: 0 22px;
+  vertical-align: top;
+  float: right;
 }
 
 // list stuffs
