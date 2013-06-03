@@ -7,7 +7,7 @@ basePath = '';
 files = [
   JASMINE,
   JASMINE_ADAPTER,
-  'app/components/fastclick/fastclick.js',
+  'app/components/fastclick/lib/fastclick.js',
   'app/components/angular/angular.js',
   'app/components/angular-mocks/angular-mocks.js',
   'app/scripts/*.js',
