@@ -18,6 +18,7 @@ body {
   color: #444;
   margin: 0;
   padding: 10px 0;
+  border-bottom: 1px solid #999;
 }
 
 .header h1 {
@@ -43,18 +44,23 @@ body {
 
 // home view stuffs
 .add-list {
-  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   height: 48px;
   text-align: center;
   margin-bottom: -1px;
+  display: -webkit-flex;
+  display: flex;
 }
 
 .add-list input[type=text] {
-  width: 72%;
   border: none;
-  height: 40px;
+  height: 39px;
   outline: none;
   box-shadow: none;
+  float: left;
+  padding: 0 0 0 14px;
+  line-height: 48px;
+  -webkit-flex: 1;
 }
 
 .btn-add-list,
@@ -74,10 +80,6 @@ body {
   padding: 1em;
   position: relative;
   border-bottom: 1px solid #ccc;
-}
-
-.listsList li:first-child {
-  border-top: 1px solid #ccc;
 }
 
 .listsList li .badge {
