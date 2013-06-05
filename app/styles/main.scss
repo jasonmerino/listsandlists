@@ -2,14 +2,22 @@
 @import "compass_twitter_bootstrap_awesome";
 @import "compass_twitter_bootstrap_responsive";
 
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
-  padding: 0;
+  padding: 60px 0 0;
   color: #444;
 }
 
 // header stuffs
 .header-span {
-  //position: fixed;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
 }
 
 .header {

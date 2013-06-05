@@ -1,10 +1,14 @@
-/* global FastClick */
+/* global FastClick, $ */
 
 'use strict';
 
 window.addEventListener('load', function() {
   FastClick.attach(document.body);
 }, false);
+
+$(document).on('touchmove',function(e){
+  e.preventDefault();
+});
 
 angular.module('listsandlistsApp', [])
   .config(['$routeProvider', function ($routeProvider) {

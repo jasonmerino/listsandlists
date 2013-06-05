@@ -1,15 +1,17 @@
 <div class="row-fluid" ng-controller="MainCtrl">
-  <div class="span12 header-span">
-    <div class="header">
+  <div class="span12">
+    <div class="header header-span">
       <h1>Lists &amp; Lists</h1>
       <i class="icon-plus" ng-click="showAddList()"></i>
     </div>
-    <div id="add-list" class="add-list" ng-show="showAddListUI">
-      <input type="text" name="" value="" ng-model="newList" id="list-to-add" placeholder="Enter list title...">
-      <button class="btn-add-list" ng-click="addList()">Add</button>
+    <div class="content js-scrollable">
+      <div id="add-list" class="add-list" ng-show="showAddListUI">
+        <input type="text" name="" value="" ng-model="newList" id="list-to-add" placeholder="Enter list title...">
+        <button class="btn-add-list" ng-click="addList()">Add</button>
+      </div>
+      <ul class="unstyled listsList">
+        <li class="status-{{status}}" ng-click="navigateToList()" ng-repeat="list in data.lists">{{list.item}} <span class="badge">{{list.itemList.length}}</span></li>
+      </ul>
     </div>
-    <ul class="unstyled listsList">
-      <li class="status-{{status}}" ng-click="navigateToList()" ng-repeat="list in data.lists">{{list.item}} <span class="badge">{{list.itemList.length}}</span></li>
-    </ul>
   </div>
 </div>
