@@ -275,9 +275,12 @@ module.exports = function (grunt) {
           // Then include everything else...
           '**/*.*',
           // .. but exclude these
-          '!apple-touch-*',
+          '!touch-icon-*',
           '!favicon.ico',
-          '!app.manifest'
+          '!app.manifest',
+          '!**/*.{less,md}',
+          '!components/iscroll/demos/**/*.*', // iscroll demos
+          '!components/font-awesome/build/_includes/examples/**/*.*' // font awesome examples
         ],
         dest: '<%= yeoman.dist %>/app.manifest'
       }
