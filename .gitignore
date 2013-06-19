@@ -4,3 +4,5 @@ dist
 .sass-cache
 .DS_Store
 app/components
+
+app/.DS_Store
