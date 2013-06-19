@@ -2,6 +2,13 @@
 
 'use strict';
 
+// var myScroll;
+// var loaded = function() {
+//   myScroll = new IScroll('#wrapper', { mouseWheel: true });
+// };
+
+// setTimeout(loaded, 3000);
+
 window.addEventListener('load', function() {
   FastClick.attach(document.body);
 }, false);

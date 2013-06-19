@@ -9,9 +9,13 @@
         <input type="text" name="" value="" ng-model="newList" id="list-to-add" placeholder="Enter list title...">
         <button class="btn-add-list" ng-click="addList()">Add</button>
       </div>
-      <ul class="unstyled listsList">
-        <li class="status-{{status}}" ng-click="navigateToList()" ng-repeat="list in data.lists">{{list.item}} <span class="badge">{{list.itemList.length}}</span></li>
-      </ul>
+      <div id="wrapper">
+        <div id="scroller">
+          <ul class="unstyled listsList">
+            <li class="status-{{status}}" ng-click="navigateToList()" ng-repeat="list in data.lists">{{list.item}} <span class="badge">{{list.itemList.length}}</span></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>
