@@ -1,27 +1,17 @@
 'use strict';
 
 angular.module('listsandlistsApp')
-  .controller('MainCtrl', ['$window', '$scope', '$location', function ($window, $scope, $location) {
+  .controller('MainCtrl', ['$window', '$scope', '$location', 'db', function ($window, $scope, $location, db) {
 
-    // grab data from localStorage
-    // TODO: write a better way to do this
-    if ($window.localStorage.listData !== undefined) {
-      $scope.data = JSON.parse($window.localStorage.listData);
-    }
-    else {
-      $scope.data = {
-        lists: [],
-        lastListId: -1
-      };
-    }
+    // pull data from localStorage factory
+    $scope.data = db.pull();
 
     $scope.showAddListUI = false;
     $scope.newList = '';
 
-    var persist = function () {
-      $window.localStorage.listData = JSON.stringify($scope.data);
-    };
-
+    /**
+     * When user clicks add button create a new list with default settings and persist
+     */
     $scope.addList = function () {
       if ($scope.newList !== '') {
         // store in JS
@@ -35,16 +25,23 @@ angular.module('listsandlistsApp')
           total: 0
         });
         $scope.data.lastListId++;
-        persist();
+        // persist
+        db.push($scope.data);
         $scope.newList = '';
         $scope.showAddListUI = false;
       }
     };
 
+    /**
+     * When user clicks on a list show them the list items
+     */
     $scope.navigateToList = function () {
       $location.path('/list/' + this.list.id);
     };
 
+    /**
+     * When user clicks the plus button to add a list show the UI for that and auto focus text box
+     */
     $scope.showAddList = function () {
       $scope.showAddListUI = true;
       setTimeout(function () {

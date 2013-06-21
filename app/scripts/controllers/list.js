@@ -2,20 +2,11 @@
 
 angular.module('listsandlistsApp')
   .controller('ListCtrl',
-    ['$window', '$scope', '$routeParams', '$location',
-      function ($window, $scope, $routeParams, $location) {
+    ['$window', '$scope', '$routeParams', '$location', 'db',
+      function ($window, $scope, $routeParams, $location, db) {
 
         // grab data from localStorage
-        // TODO: write a better way to do this
-        if ($window.localStorage.listData !== undefined) {
-          $scope.data = JSON.parse($window.localStorage.listData);
-        }
-        else {
-          $scope.data = {
-            lists: [],
-            lastListId: -1
-          };
-        }
+        $scope.data = db.pull();
 
         // store UI state within $scope
         $scope.ui = {
@@ -39,13 +30,6 @@ angular.module('listsandlistsApp')
         }
 
         /**
-         * Persist the JS data to localStorage
-         */
-        var persist = function () {
-          $window.localStorage.listData = JSON.stringify($scope.data);
-        };
-
-        /**
          * Add the typed item to the list and persist it in localStorage
          */
         $scope.addItem = function () {
@@ -56,7 +40,8 @@ angular.module('listsandlistsApp')
             };
             $scope.list.lastItemId++;
             $scope.list.itemList.push(item);
-            persist();
+            // persist
+            db.push($scope.data);
             // adjust UI
             $scope.ui.showAddItem = false;
             $scope.newItem = '';
@@ -86,7 +71,8 @@ angular.module('listsandlistsApp')
         $scope.removeItem = function (index) {
           // remove the item from the listItem array
           $scope.list.itemList.splice(index, 1);
-          persist();
+          // persist
+          db.push($scope.data);
         };
 
         // create scoped pointer to the active list

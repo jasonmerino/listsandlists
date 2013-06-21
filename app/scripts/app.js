@@ -22,3 +22,31 @@ angular.module('listsandlistsApp', [])
         redirectTo: '/'
       });
   }]);
+
+angular.module('listsandlistsApp')
+  .provider('db', function() {
+
+
+      this.$get = function () {
+        var data;
+        if (window.localStorage.listData !== undefined) {
+          data = JSON.parse(window.localStorage.listData);
+        }
+        else {
+          data = {
+            lists: [],
+            lastListId: -1
+          };
+        }
+        return {
+          pull: function () {
+            return data;
+          },
+          push: function (data) {
+            window.localStorage.listData = JSON.stringify(data);
+          }
+
+        };
+      };
+
+  });
