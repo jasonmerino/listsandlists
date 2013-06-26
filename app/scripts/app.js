@@ -25,8 +25,6 @@ angular.module('listsandlistsApp', [])
 
 angular.module('listsandlistsApp')
   .provider('db', function() {
-
-
       this.$get = function () {
         var data;
         if (window.localStorage.listData !== undefined) {
@@ -48,5 +46,4 @@ angular.module('listsandlistsApp')
 
         };
       };
-
-  });
+    });

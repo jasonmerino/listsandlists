@@ -9013,8 +9013,8 @@ table th[class*="span"],
  */
 @font-face {
   font-family: "FontAwesome";
-  src: url(/components/font-awesome/build/assets/font-awesome/font/fontawesome-webfont.eot?v=3.0.1);
-  src: url(/components/font-awesome/build/assets/font-awesome/font/fontawesome-webfont.eot?v=3.0.1?#iefix) format('eot'), url(/components/font-awesome/build/assets/font-awesome/font/fontawesome-webfont.woff?v=3.0.1) format('woff'), url(/components/font-awesome/build/assets/font-awesome/font/fontawesome-webfont.ttf?v=3.0.1) format('truetype');
+  src: url('../components/font-awesome/build/assets/font-awesome/font/fontawesome-webfont.eot?v=3.0.1');
+  src: url('../components/font-awesome/build/assets/font-awesome/font/fontawesome-webfont.eot?v=3.0.1?#iefix') format('eot'), url('../components/font-awesome/build/assets/font-awesome/font/fontawesome-webfont.woff?v=3.0.1') format('woff'), url('../components/font-awesome/build/assets/font-awesome/font/fontawesome-webfont.ttf?v=3.0.1') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
