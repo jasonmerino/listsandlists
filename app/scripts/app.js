@@ -2,10 +2,16 @@
 
 'use strict';
 
+/**
+ * Add FastClick to the page to make more responsive on mobile touch devices
+ */
 window.addEventListener('load', function() {
   FastClick.attach(document.body);
 }, false);
 
+/**
+ * Configure routes and controller associations for the lists and lists module
+ */
 angular.module('listsandlistsApp', [])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
@@ -23,6 +29,9 @@ angular.module('listsandlistsApp', [])
       });
   }]);
 
+/**
+ * Add a provider to the lists and lists module for 'global' persistence
+ */
 angular.module('listsandlistsApp')
   .provider('db', function() {
       this.$get = function () {

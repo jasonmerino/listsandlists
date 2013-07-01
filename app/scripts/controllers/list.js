@@ -5,17 +5,6 @@ angular.module('listsandlistsApp')
     ['$window', '$scope', '$routeParams', '$location', 'db',
       function ($window, $scope, $routeParams, $location, db) {
 
-        // grab data from localStorage
-        $scope.data = db.pull();
-
-        // store UI state within $scope
-        $scope.ui = {
-          showAddItem: false
-        };
-
-        // init scope variables
-        $scope.newItem = '';
-
         /**
          * Helper function to get the current list for simpler access
          * @param  {Number} id
@@ -28,6 +17,26 @@ angular.module('listsandlistsApp')
             }
           }
         }
+
+        /**
+         * Grab data from localStorage
+         * @type {Object}
+         */
+        $scope.data = db.pull();
+
+        /**
+         * Store UI state within $scope
+         * @type {Object}
+         */
+        $scope.ui = {
+          showAddItem: false
+        };
+
+        /**
+         * Set value of new item text input
+         * @type {String}
+         */
+        $scope.newItem = '';
 
         /**
          * Add the typed item to the list and persist it in localStorage
@@ -53,6 +62,8 @@ angular.module('listsandlistsApp')
          */
         $scope.showAddItemUI = function () {
           $scope.ui.showAddItem = true;
+
+          // make focus 'async'
           setTimeout(function () {
             document.getElementById('new-item').focus();
           }, 10);
@@ -67,6 +78,7 @@ angular.module('listsandlistsApp')
 
         /**
          * Remove the clicked item from the current list
+         * @param {Number} index The index of the item to remove
          */
         $scope.removeItem = function (index) {
           // remove the item from the listItem array
@@ -75,7 +87,10 @@ angular.module('listsandlistsApp')
           db.push($scope.data);
         };
 
-        // create scoped pointer to the active list
+        /**
+         * Create scoped pointer to the active list for easier access
+         * @type {Object}
+         */
         $scope.list = getListById(parseInt($routeParams.id, 10));
       }
     ]

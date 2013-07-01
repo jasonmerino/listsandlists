@@ -3,9 +3,16 @@
 angular.module('listsandlistsApp')
   .controller('MainCtrl', ['$window', '$scope', '$location', 'db', function ($window, $scope, $location, db) {
 
-    // pull data from localStorage factory
+    /**
+     * Pull data from localStorage provider
+     * @type {Object}
+     */
     $scope.data = db.pull();
 
+    /**
+     * setup UI 'model' stuff
+     * @type {Boolean}
+     */
     $scope.showAddListUI = false;
     $scope.newList = '';
 
@@ -13,9 +20,11 @@ angular.module('listsandlistsApp')
      * When user clicks add button create a new list with default settings and persist
      */
     $scope.addList = function () {
-      if ($scope.newList !== '') {
-        // store in JS
 
+      // check that user entered text
+      if ($scope.newList !== '') {
+
+        // store in JS
         $scope.data.lists.push({
           id: $scope.data.lastListId + 1,
           item: $scope.newList,
@@ -25,8 +34,11 @@ angular.module('listsandlistsApp')
           total: 0
         });
         $scope.data.lastListId++;
+
         // persist
         db.push($scope.data);
+
+        // reset UI
         $scope.newList = '';
         $scope.showAddListUI = false;
       }
@@ -44,6 +56,8 @@ angular.module('listsandlistsApp')
      */
     $scope.showAddList = function () {
       $scope.showAddListUI = true;
+
+      // set a delay here to make async
       setTimeout(function () {
         document.getElementById('list-to-add').focus();
       }, 10);
