@@ -39,11 +39,11 @@ var SampleApp = function() {
      */
     self.populateCache = function() {
         if (typeof self.zcache === "undefined") {
-            self.zcache = { 'app/index.html': '' };
+            self.zcache = { 'index.html': '' };
         }
 
         //  Local cache for static content.
-        self.zcache['app/index.html'] = fs.readFileSync('./app/index.html');
+        self.zcache['index.html'] = fs.readFileSync('./index.html');
     };
 
 
@@ -107,7 +107,7 @@ var SampleApp = function() {
 
         self.routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('app/index.html') );
+            res.send(self.cache_get('index.html') );
         };
     };
 
@@ -119,6 +119,7 @@ var SampleApp = function() {
     self.initializeServer = function() {
         self.createRoutes();
         self.app = express.createServer();
+        self.app.use(express.static(__dirname + '/app'));
 
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {
