@@ -1,16 +1,18 @@
 #!/bin/env node
 //  OpenShift sample Node application
+var mongoose = require('mongoose');
 var express = require('express');
 var fs      = require('fs');
 
 /**
- *  Define the sample application.
+ *  Define listsandlists application.
  */
-var SampleApp = function() {
-
+var LandL = function() {
+  'use strict';
   //  Scope.
   var self = this;
 
+  // var shemas = {};
 
   /*  ================================================================  */
   /*  Helper functions.                                                 */
@@ -23,28 +25,29 @@ var SampleApp = function() {
     //  Set the environment variables we need.
     self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
     self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+    self.dbHost = process.env.OPENSHIFT_MONGODB_DB_HOST;
+    self.dbPort = process.env.OPENSHIFT_MONGODB_DB_PORT || 27017;
 
-    if (typeof self.ipaddress === "undefined") {
+    if (typeof self.ipaddress === 'undefined') {
       //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
       //  allows us to run/test the app locally.
       console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
-      self.ipaddress = "127.0.0.1";
-    };
+      self.ipaddress = '127.0.0.1';
+      self.dbHost = '127.0.0.1';
+    }
   };
-
 
   /**
    *  Populate the cache.
    */
   self.populateCache = function() {
-    if (typeof self.zcache === "undefined") {
+    if (typeof self.zcache === 'undefined') {
       self.zcache = { 'index.html': '' };
     }
 
     //  Local cache for static content.
     self.zcache['index.html'] = fs.readFileSync('./index.html');
   };
-
 
   /**
    *  Retrieve entry (content) from cache.
@@ -59,10 +62,10 @@ var SampleApp = function() {
    *  @param {string} sig  Signal to terminate on.
    */
   self.terminator = function(sig){
-    if (typeof sig === "string") {
-       console.log('%s: Received %s - terminating sample app ...',
-             Date(Date.now()), sig);
-       process.exit(1);
+    if (typeof sig === 'string') {
+      console.log('%s: Received %s - terminating sample app ...',
+        Date(Date.now()), sig);
+      process.exit(1);
     }
     console.log('%s: Node server stopped.', Date(Date.now()) );
   };
@@ -79,7 +82,9 @@ var SampleApp = function() {
     ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
      'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
     ].forEach(function(element, index, array) {
-      process.on(element, function() { self.terminator(element); });
+      process.on(element, function() {
+        self.terminator(element);
+      });
     });
   };
 
@@ -94,20 +99,26 @@ var SampleApp = function() {
   self.createRoutes = function() {
     self.routes = { };
 
-    // Routes for /health, /asciimo and /
+    // View routes
     self.routes['/health'] = function(req, res) {
       res.send('1');
     };
 
     self.routes['/asciimo'] = function(req, res) {
       var link = 'http://i.imgur.com/kmbjB.png';
-      res.send("<html><body><img src='" + link + "'></body></html>");
+      res.send('<html><body><img src="' + link + '"></body></html>');
     };
 
     self.routes['/'] = function(req, res) {
       res.setHeader('Content-Type', 'text/html');
       res.send(self.cache_get('index.html') );
     };
+
+    // API routes
+    // self.routes['/api/user/register'] = function (req, res) {
+    //   res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    //   res.send({});
+    // };
   };
 
 
@@ -126,6 +137,19 @@ var SampleApp = function() {
     }
   };
 
+  self.initializeDb = function () {
+    var mongoPath = 'mongodb://' + self.dbHost + ':' + self.dbPort;
+    mongoose.connect(mongoPath);
+    var db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function callback () {
+      console.log('Node server connected to mongo db at ' + mongoPath);
+      // var userSchema = mongoose.Schema({
+      //   id: Number,
+      //   username: String
+      // });
+    });
+  };
 
   /**
    *  Initializes the sample application.
@@ -136,6 +160,7 @@ var SampleApp = function() {
     self.setupTerminationHandlers();
 
     // Create the express server and routes.
+    self.initializeDb();
     self.initializeServer();
   };
 
@@ -158,7 +183,7 @@ var SampleApp = function() {
 /**
  *  main():  Main code.
  */
-var zapp = new SampleApp();
+var zapp = new LandL();
 zapp.initialize();
 zapp.start();
 
