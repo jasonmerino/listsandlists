@@ -12,7 +12,7 @@ var LandL = function() {
   //  Scope.
   var self = this;
 
-  // var shemas = {};
+  var schemas = {};
 
   /*  ================================================================  */
   /*  Helper functions.                                                 */
@@ -115,10 +115,27 @@ var LandL = function() {
     };
 
     // API routes
-    // self.routes['/api/user/register'] = function (req, res) {
-    //   res.setHeader('Content-Type', 'application/json; charset=utf-8');
-    //   res.send({});
-    // };
+    self.routes['/api/user/register'] = function (req, res) {
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+      var response = {};
+      var NewUser = mongoose.model('user', schemas.user);
+      // require post for new user creation
+      if (req.route.method === 'post') {
+        var user = new NewUser({ username: 'jason' });
+        // save user to db
+        user.save(function (error, self) {
+          response.status = error ? 'error' : 'success';
+          console.log(error);
+          console.log(self);
+        });
+      }
+      NewUser.find(function (error, users) {
+        response.queryStatus = error ? 'error' : 'success';
+        response.data = users;
+        console.log(req.route.method);
+        res.send(response);
+      });
+    };
   };
 
 
@@ -144,10 +161,11 @@ var LandL = function() {
     db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', function callback () {
       console.log('Node server connected to mongo db at ' + mongoPath);
-      // var userSchema = mongoose.Schema({
-      //   id: Number,
-      //   username: String
-      // });
+      // define user schema
+      schemas.user = mongoose.Schema({
+        //id: Number,
+        username: String
+      });
     });
   };
 
@@ -176,7 +194,7 @@ var LandL = function() {
     });
   };
 
-};   /*  Sample Application.  */
+};
 
 
 
