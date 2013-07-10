@@ -116,26 +116,33 @@ var LandL = function() {
 
     // API routes
     self.routes['/api/user/register'] = function (req, res) {
-      res.setHeader('Content-Type', 'application/json; charset=utf-8');
-      var response = {};
-      var NewUser = mongoose.model('user', schemas.user);
-      // require post for new user creation
-      if (req.route.method === 'post') {
-        var user = new NewUser({ username: 'jason' });
-        // save user to db
-        user.save(function (error, self) {
-          response.status = error ? 'error' : 'success';
-          console.log(error);
-          console.log(self);
-        });
-      }
-      NewUser.find(function (error, users) {
-        response.queryStatus = error ? 'error' : 'success';
-        response.data = users;
-        console.log(req.route.method);
-        res.send(response);
-      });
+      // require https
+      // if (req.protocol === 'https') {
+        res.setHeader('Content-Type', 'application/json; charset=utf-8');
+        var response = {};
+        var NewUser = mongoose.model('user', schemas.user);
+        // require post for new user creation
+        if (req.route.method === 'post') {
+          var user = new NewUser({
+            username: req.body.username,
+            password: req.body.password
+          });
+          // save user to db
+          user.save(function (error, user) {
+            // setup response object
+            response.status = error ? 'error' : 'success';
+            response.data = user;
+            // send response
+            res.send(response);
+          });
+        }
+      // }
+      // else {
+      //   res.status(403); // forbidden
+      //   res.send();
+      // }
     };
+
   };
 
 
@@ -147,10 +154,11 @@ var LandL = function() {
     self.createRoutes();
     self.app = express();
     self.app.use(express.static(__dirname + '/app'));
+    self.app.use(express.bodyParser());
 
     //  Add handlers for the app (from the routes).
     for (var r in self.routes) {
-      self.app.get(r, self.routes[r]);
+      self.app.all(r, self.routes[r]);
     }
   };
 
@@ -164,7 +172,8 @@ var LandL = function() {
       // define user schema
       schemas.user = mongoose.Schema({
         //id: Number,
-        username: String
+        username: String,
+        password: String
       });
     });
   };
