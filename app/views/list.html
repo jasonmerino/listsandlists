@@ -11,7 +11,10 @@
         <button class="btn-add-item" ng-click="addItem()">Add</button>
       </div>
       <ul class="unstyled listsList">
-        <li ng-repeat="listItem in list.itemList" ng-click="removeItem($index)">{{listItem.item}}</li>
+        <li ng-repeat="listItem in list.itemList" ng-click="removeItem($index)">
+          {{listItem.item}}
+          <i class="icon-chevron-right pull-right" ng-click="editItemDetails(); $event.stopPropagation();"></i>
+        </li>
       </ul>
     </div>
   </div>

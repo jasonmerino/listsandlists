@@ -25,7 +25,7 @@ body {
   color: #444;
   margin: 0;
   padding: 10px 0;
-  border-bottom: 1px solid #999999;
+  border-bottom: 1px solid #999;
 }
 
 /* line 29, main.scss */
@@ -55,7 +55,7 @@ body {
 
 /* line 51, main.scss */
 .add-list {
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid #ccc;
   height: 48px;
   text-align: center;
   margin-bottom: -1px;
@@ -92,7 +92,7 @@ body {
 .listsList li {
   padding: 1em;
   position: relative;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid #ccc;
 }
 
 /* line 90, main.scss */
@@ -133,4 +133,13 @@ body {
 .repeat-leave-setup.repeat-leave-start {
   opacity: 0;
   max-height: 0;
+}
+
+/* line 121, main.scss */
+.icon-chevron-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 17px;
+  display: none;
 }

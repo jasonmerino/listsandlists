@@ -88,6 +88,13 @@ angular.module('listsandlistsApp')
         };
 
         /**
+         * Load up edit ite details view
+         */
+        $scope.editItemDetails = function () {
+          $location.path('/list/' + $scope.list.id + '/' + this.listItem.id);
+        };
+
+        /**
          * Create scoped pointer to the active list for easier access
          * @type {Object}
          */
