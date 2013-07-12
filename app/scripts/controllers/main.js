@@ -7,7 +7,7 @@ angular.module('listsandlistsApp')
      * Pull data from localStorage provider
      * @type {Object}
      */
-    $scope.data = db.pull();
+    $scope.data = db.pull()
 
     /**
      * setup UI 'model' stuff
