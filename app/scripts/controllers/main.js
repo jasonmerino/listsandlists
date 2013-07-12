@@ -14,8 +14,7 @@ angular.module('listsandlistsApp')
      * @type {Boolean}
      */
     $scope.showAddListUI = false;
-    $scope.newList = "";
-
+    $scope.newList = '';
 
     /**
      * When user clicks add button create a new list with default settings and persist
