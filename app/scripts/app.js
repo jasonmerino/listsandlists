@@ -20,7 +20,7 @@ angular.module('listsandlistsApp', [])
         controller: 'MainCtrl'
       });
     $routeProvider
-      .when('/list/:id/:id', {
+      .when('/list/:listId/:itemId', {
         templateUrl: 'views/item-details.html',
         controller: 'ItemDetailsCtrl'
       });

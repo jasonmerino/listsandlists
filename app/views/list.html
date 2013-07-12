@@ -13,7 +13,7 @@
       <ul class="unstyled listsList">
         <li ng-repeat="listItem in list.itemList" ng-click="removeItem($index)">
           {{listItem.item}}
-          <i class="icon-chevron-right pull-right" ng-click="editItemDetails(); $event.stopPropagation();"></i>
+          <i class="icon-chevron-right pull-right" ng-click="editItemDetails($event)"></i>
         </li>
       </ul>
     </div>
