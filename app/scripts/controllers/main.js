@@ -7,14 +7,14 @@ angular.module('listsandlistsApp')
      * Pull data from localStorage provider
      * @type {Object}
      */
-    $scope.data = db.pull()
+    $scope.data = db.pull();
 
     /**
      * setup UI 'model' stuff
      * @type {Boolean}
      */
     $scope.showAddListUI = false;
-    $scope.newList = '';
+    $scope.newList = "";
 
     /**
      * When user clicks add button create a new list with default settings and persist
