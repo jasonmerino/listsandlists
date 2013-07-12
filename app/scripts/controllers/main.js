@@ -40,7 +40,7 @@ angular.module('listsandlistsApp')
         db.push($scope.data);
 
         // reset UI
-        $scope.newList = "";
+        $scope.newList = '';
         $scope.showAddListUI = false;
       }
     };
