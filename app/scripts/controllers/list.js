@@ -88,6 +88,16 @@ angular.module('listsandlistsApp')
         };
 
         /**
+         * Load up edit ite details view
+         * @param {Objecet} e The click event object
+         */
+        $scope.editItemDetails = function (e) {
+          // stop propagation so removeItem() doesn't get called
+          e.stopPropagation();
+          $location.path('/list/' + $scope.list.id + '/' + this.listItem.id);
+        };
+
+        /**
          * Create scoped pointer to the active list for easier access
          * @type {Object}
          */

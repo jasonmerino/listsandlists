@@ -117,3 +117,11 @@ body {
     opacity:0;
     max-height: 0;
 }
+
+.icon-chevron-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 17px;
+  display: none; // just until the view has something to show
+}
