@@ -1,11 +1,11 @@
 <div class="row-fluid">
   <div class="span12">
     <div class="header header-span">
-      <i class="icon-home" ng-click="navigateToMainView()"></i>
+      <i class="icon-arrow-left nav-button-left" ng-click="backToItem()"></i>
       <h1>Details</h1>
     </div>
     <div class="content js-scrollable">
-      <input type="text" value="{{data.item}}">
+      <input type="text" ng-model="data.item">
     </div>
   </div>
 </div>

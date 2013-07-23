@@ -10,10 +10,18 @@ window.addEventListener('load', function() {
 }, false);
 
 /**
+ * Extend the String object to convert to int
+ */
+String.prototype.toInt = function () {
+  return parseInt(this, 10);
+};
+
+var app = angular.module('listsandlistsApp', []);
+
+/**
  * Configure routes and controller associations for the lists and lists module
  */
-angular.module('listsandlistsApp', [])
-  .config(['$routeProvider', function ($routeProvider) {
+app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -37,8 +45,7 @@ angular.module('listsandlistsApp', [])
 /**
  * Add a provider to the lists and lists module for 'global' persistence
  */
-angular.module('listsandlistsApp')
-  .provider('db', function() {
+app.provider('db', function() {
       this.$get = function () {
         var data;
         if (window.localStorage.listData !== undefined) {

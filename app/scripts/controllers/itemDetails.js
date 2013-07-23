@@ -1,13 +1,20 @@
+/* global app */
+
 'use strict';
 
-angular.module('listsandlistsApp').controller('ItemDetailsCtrl', ['$scope', '$routeParams', 'db', function ($scope, $routeParams, db) {
+app.controller(
+  'ItemDetailsCtrl',
+  ['$scope', '$routeParams', 'db', '$location',
+  function ($scope, $routeParams, db, $location) {
 
   var data = db.pull();
 
   $scope.findIndexFromId = function (arr, id) {
     var index;
     angular.forEach(arr, function (list, key) {
-      if (list.id === ~~id) { index = key; }
+      if (list.id === id.toInt()) {
+        index = key;
+      }
     });
     return index;
   };
@@ -16,4 +23,15 @@ angular.module('listsandlistsApp').controller('ItemDetailsCtrl', ['$scope', '$ro
   var itemIndex = $scope.findIndexFromId(data.lists[listIndex].itemList, $routeParams.itemId);
 
   $scope.data = data.lists[listIndex].itemList[itemIndex];
+
+  $scope.backToItem = function () {
+    // persist changes
+    data.lists[listIndex].itemList[itemIndex] = $scope.data;
+    db.push(data);
+    // move back to list
+    $location.path('/list/' + listIndex);
+  };
+
+
+
 }]);

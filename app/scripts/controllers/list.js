@@ -1,7 +1,8 @@
+/* global app */
+
 'use strict';
 
-angular.module('listsandlistsApp')
-  .controller('ListCtrl',
+app.controller('ListCtrl',
     ['$window', '$scope', '$routeParams', '$location', 'db',
       function ($window, $scope, $routeParams, $location, db) {
 

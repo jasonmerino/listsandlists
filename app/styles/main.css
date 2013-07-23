@@ -25,7 +25,7 @@ body {
   color: #444;
   margin: 0;
   padding: 10px 0;
-  border-bottom: 1px solid #999;
+  border-bottom: 1px solid #999999;
 }
 
 /* line 29, main.scss */
@@ -35,8 +35,8 @@ body {
 }
 
 /* line 35, main.scss */
-.header .icon-plus,
-.header .icon-home {
+.header .nav-button-left,
+.header .nav-button-right {
   position: absolute;
   top: 6px;
   font-size: 2em;
@@ -44,18 +44,18 @@ body {
 }
 
 /* line 42, main.scss */
-.header .icon-plus {
+.header .nav-button-right {
   right: 14px;
 }
 
 /* line 46, main.scss */
-.header .icon-home {
+.header .nav-button-left {
   left: 14px;
 }
 
 /* line 51, main.scss */
 .add-list {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #cccccc;
   height: 48px;
   text-align: center;
   margin-bottom: -1px;
@@ -92,7 +92,7 @@ body {
 .listsList li {
   padding: 1em;
   position: relative;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #cccccc;
 }
 
 /* line 90, main.scss */
@@ -141,5 +141,4 @@ body {
   right: 0;
   top: 0;
   padding: 17px;
-  display: none;
 }

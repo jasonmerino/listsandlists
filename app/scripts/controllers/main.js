@@ -1,7 +1,8 @@
+/* global app */
+
 'use strict';
 
-angular.module('listsandlistsApp')
-  .controller('MainCtrl', ['$window', '$scope', '$location', 'db', function ($window, $scope, $location, db) {
+app.controller('MainCtrl', ['$window', '$scope', '$location', 'db', function ($window, $scope, $location, db) {
 
     /**
      * Pull data from localStorage provider

@@ -31,19 +31,19 @@ body {
   margin: 0;
 }
 
-.header .icon-plus,
-.header .icon-home {
+.header .nav-button-left,
+.header .nav-button-right {
   position: absolute;
   top: 6px;
   font-size: 2em;
   padding: 10px;
 }
 
-.header .icon-plus {
+.header .nav-button-right {
   right: 14px;
 }
 
-.header .icon-home {
+.header .nav-button-left {
   left: 14px;
 }
 
@@ -123,5 +123,5 @@ body {
   right: 0;
   top: 0;
   padding: 17px;
-  display: none; // just until the view has something to show
+  //display: none; // just until the view has something to show
 }
