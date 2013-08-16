@@ -20,8 +20,8 @@ bower install
 
 After this install is complete go [download MongoDB](http://www.mongodb.org/downloads) and follow the installation instructions per your OS.
 
-To run the application locally start up MongoDB then navigate the the repo path and run the following command:
+To run the application locally run the following command:
 
 ```bash
-node server.js
+bash start.sh
 ```
