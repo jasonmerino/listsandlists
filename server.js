@@ -1,8 +1,9 @@
 #!/bin/env node
 //  OpenShift sample Node application
-var mongoose = require('mongoose');
-var express = require('express');
-var fs      = require('fs');
+var mongoose = require('mongoose'),
+  express = require('express'),
+  fs      = require('fs'),
+  appUtils = require('./utils');
 
 /**
  *  Define listsandlists application.
@@ -27,6 +28,7 @@ var LandL = function() {
     self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
     self.dbHost = process.env.OPENSHIFT_MONGODB_DB_HOST;
     self.dbPort = process.env.OPENSHIFT_MONGODB_DB_PORT || 27017;
+    self.isLocal = false;
 
     if (typeof self.ipaddress === 'undefined') {
       //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
@@ -34,6 +36,7 @@ var LandL = function() {
       console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
       self.ipaddress = '127.0.0.1';
       self.dbHost = '127.0.0.1';
+      self.isLocal = true;
     }
   };
 
@@ -116,31 +119,48 @@ var LandL = function() {
 
     // API routes
     self.routes['/api/user/register'] = function (req, res) {
-      // require https
-      // if (req.protocol === 'https') {
-        res.setHeader('Content-Type', 'application/json; charset=utf-8');
-        var response = {};
-        var NewUser = mongoose.model('user', schemas.user);
-        // require post for new user creation
-        if (req.route.method === 'post') {
-          var user = new NewUser({
-            username: req.body.username,
-            password: req.body.password
-          });
-          // save user to db
-          user.save(function (error, user) {
-            // setup response object
-            response.status = error ? 'error' : 'success';
-            response.data = user;
-            // send response
-            res.send(response);
-          });
-        }
-      // }
-      // else {
-      //   res.status(403); // forbidden
-      //   res.send();
-      // }
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+      // require post for new user creation
+      if (req.route.method === 'post') {
+        console.log(req.protocol);
+        // create user schema
+        var User = mongoose.model('user', schemas.user),
+          response = {},
+          un = req.body.username,
+          pw = req.body.password;
+
+        // query database for existing user
+        User.find({ username: un }, function (error, usr) {
+          if (error) throw error;
+
+          // if no user was found
+          if (usr.length === 0) {
+            var user = new User({
+              username: un,
+              password: appUtils.hashPassword(pw)
+            });
+            // save user to db
+            user.save(function (error, user) {
+              // setup response object
+              response.status = error ? 'error' : 'success';
+              response.data = user;
+              // send response
+              res.send(response);
+            });
+          }
+          // if 1 or more users was found
+          else {
+            res.send({
+              status: 'error',
+              message: 'User already exists.'
+            });
+          }
+        });
+      }
+      else {
+        res.status(403); // forbidden
+        res.send();
+      }
     };
 
   };
@@ -184,7 +204,9 @@ var LandL = function() {
   self.initialize = function() {
     self.setupVariables();
     self.populateCache();
-    self.setupTerminationHandlers();
+    if (!self.isLocal) {
+      self.setupTerminationHandlers();
+    }
 
     // Create the express server and routes.
     self.initializeDb();

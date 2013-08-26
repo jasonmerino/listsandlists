@@ -2,5 +2,5 @@
 # Start Lists & Lists local app
 
 mongod &
-node server.js &
+nodemon server.js &
 cd app && compass watch
