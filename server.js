@@ -3,8 +3,11 @@
 var mongoose = require('mongoose'),
   express = require('express'),
   fs      = require('fs'),
-  appUtils = require('./utils'),
-  account = require('./api/account');
+  passport = require('passport'),
+  LocalStrategy = require('passport-local').Strategy,
+  auth = require('./auth'),
+  account = require('./api/account'),
+  router = require('./router');
 
 /**
  *  Define listsandlists application.
@@ -13,8 +16,6 @@ var LandL = function() {
   'use strict';
   //  Scope.
   var self = this;
-
-  var schemas = {};
 
   /*  ================================================================  */
   /*  Helper functions.                                                 */
@@ -57,7 +58,7 @@ var LandL = function() {
    *  Retrieve entry (content) from cache.
    *  @param {string} key  Key identifying content to retrieve from cache.
    */
-  self.cache_get = function(key) { return self.zcache[key]; };
+  self.cacheGet = function(key) { return self.zcache[key]; };
 
 
   /**
@@ -85,7 +86,7 @@ var LandL = function() {
     // Removed 'SIGPIPE' from the list - bugz 852598.
     ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
      'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
-    ].forEach(function(element, index, array) {
+    ].forEach(function(element) {
       process.on(element, function() {
         self.terminator(element);
       });
@@ -113,14 +114,32 @@ var LandL = function() {
       res.send('<html><body><img src="' + link + '"></body></html>');
     };
 
+
     self.routes['/'] = function(req, res) {
       res.setHeader('Content-Type', 'text/html');
-      res.send(self.cache_get('index.html') );
+      res.send(self.cacheGet('index.html'));
     };
 
     // API routes
-    self.routes['/api/user/register'] = account.register;
-    self.routes['/api/users'] = account.getUsers;
+    self.routes['/api/user/register'] = {
+      controller: 'account',
+      action: 'register',
+      verbs: ['post']
+    };
+    self.routes['/api/users'] = {
+      controller: 'account',
+      action: 'getUsers'
+    };
+    self.routes['/api/user/:id'] = {
+      controller: 'account',
+      action: 'getUser'
+    };
+    self.routes['/api/login/auth'] = {
+      controller: 'account',
+      action: 'login',
+      verbs: ['post'],
+      middleware: passport.authenticate('local')
+    };
   };
 
 
@@ -132,12 +151,28 @@ var LandL = function() {
     self.createRoutes();
     self.app = express();
     self.app.use(express.static(__dirname + '/app'));
+    self.app.use(express.cookieParser());
     self.app.use(express.bodyParser());
 
-    //  Add handlers for the app (from the routes).
-    for (var r in self.routes) {
-      self.app.all(r, self.routes[r]);
-    }
+    self.app.use(express.session({
+      secret: 'this is a secret'
+    }));
+
+
+    // use passport
+    self.app.use(passport.initialize());
+    self.app.use(passport.session());
+    passport.use(new LocalStrategy(auth.login));
+    passport.serializeUser(function(user, done) {
+      done(null, user);
+    });
+    passport.deserializeUser(function(obj, done) {
+      // console.log("USER: ", obj);
+      done(null, obj);
+    });
+
+    // register all the routes
+    router.registerRoutes(self.routes, self.app);
   };
 
   self.initializeDb = function () {

@@ -24,7 +24,7 @@ var Account = (function () {
 
       // require post for new user creation
       if (req.route.method === 'post') {
-        console.log(req.protocol);
+
         // create user schema
         var User = mongoose.model('user', schemas.user),
           response = {},
@@ -67,16 +67,37 @@ var Account = (function () {
       }
     },
 
-    getUsers: function (req, res) {
-
+    /**
+     * Get a user by ID
+     * @param  {Object} req Request
+     * @param  {Object} res Response
+     */
+    getUser: function (req, res) {
       setHeaders(res);
+      var User = mongoose.model('user', schemas.user);
+      User.find({ _id: req.params.id }, function (error, usr) {
+        res.json(usr || {});
+      });
+    },
 
-      var User = mongoose.model('user', schemas.user)
+    /**
+     * Log a user in with the given credentials
+     * @param  {Object} req Request
+     * @param  {Object} res Response
+     */
+    login: function (req, res) {
+      var User = mongoose.model('user', schemas.user);
+      User.findOne({ password: req.body.password, username: req.body.username }, function (error, usr) {
+        res.json(usr || {});
+      });
+    },
+
+    getUsers: function (req, res) {
+      setHeaders(res);
+      var User = mongoose.model('user', schemas.user);
       User.find({}, function (error, usr) {
         res.json(usr);
-
       });
-
     }
 
   };
